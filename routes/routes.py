@@ -1,4 +1,4 @@
-from authRoutes import SignupApi, LoginApi
+from .authRoutes import SignupApi, LoginApi
 
 
 def initialize_routes(api):

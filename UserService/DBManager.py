@@ -1,5 +1,5 @@
 import flask_user
-from App import app
+from app import app
 
 
 class MyUserDB:
