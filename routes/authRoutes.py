@@ -42,7 +42,6 @@ class SignupApi(Resource):
 
 
 class LoginApi(Resource):
-    @cross_origin()
     def get(self):
         try:
             user = User.objects.get(email=request.form.get('email'))

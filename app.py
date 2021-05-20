@@ -2,6 +2,7 @@ import os
 
 from flask import Flask, send_from_directory
 from flask_bcrypt import Bcrypt
+from flask_cors import CORS
 from flask_jwt_extended import JWTManager
 from flask_restful import Api
 
@@ -12,6 +13,8 @@ from database.db import initialize_db
 from routes.routes import initialize_routes
 
 app = Flask(data.__app_name__)
+cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
+
 app.config[Constants.JWT_SECRET_KEY] = os.environ[EnvironmentVariables.SECRET_KEY]
 app.config[Constants.MONGODB_SETTINGS] = {
     'host': os.environ[EnvironmentVariables.CONNECTION_STRING]
