@@ -1,3 +1,4 @@
+import datetime
 from database.user import User
 from database.db import db
 from assets import errors
@@ -5,7 +6,7 @@ import datetime
 
 
 class Student(User):
-    rank = db.NumberField(default=0)
+    rank = db.IntField(default=0)
     internCandidate = db.ListField(db.NumberField(), default=list)
     internComplete = db.ListField(db.NumberField(), default=list)
     internCurrent = db.ListField(db.NumberField(), default=list)

@@ -7,23 +7,30 @@ from mongoengine.errors import FieldDoesNotExist, NotUniqueError, DoesNotExist
 
 from assets.errors import SchemaValidationError, EmailAlreadyExistsError, UnauthorizedError, \
     InternalServerError
-from database.user import User
+from database.student import Student
+from database.company import Company
 from flask_jwt_extended import jwt_required, get_jwt_identity
 
 
 class SignupApi(Resource):
     def post(self):
         try:
-            firstName = request.form["first name"]
-            lastName = request.form["first name"]
+
+            firstName = request.form["first_name"]
+            lastName = request.form["last_name"]
             email = request.form["email"]
             password = request.form["password"]
-            user = User(email=email, password=password, firstName=firstName, lastName=lastName)
+            user_type = request.form['type']
+            if user_type == 'STUDENT':
+                user = Student(firstName=firstName, lastName=lastName, email=email, password=password,
+                               user_type=user_type)
+            else:
+                user = Company(firstName=firstName, lastName=lastName, email=email, password=password,
+                               user_type=user_type)
             user.hash_password()
             user.save()
-            id = user.id
-            print(id)
-            return {'id': str(id)}, 200
+            print(user.id)
+            return {'id': str(user.id)}, 200
         except FieldDoesNotExist:
             raise SchemaValidationError
         except NotUniqueError:
@@ -34,7 +41,7 @@ class SignupApi(Resource):
 
 
 class LoginApi(Resource):
-    def post(self):
+    def get(self):
         try:
             user = User.objects.get(email=request.form.get('email'))
             authorized = user.check_password(request.form.get('password'))
