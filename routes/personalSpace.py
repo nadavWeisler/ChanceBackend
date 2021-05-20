@@ -11,14 +11,29 @@ from database.student import Student
 from database.company import Company
 
 
-class PersonalSpace(Resource):
+class CompanyPersonalSpace(Resource):
     def get(self, email):
         try:
-            user = Student.objects(email=email)
-            if not user:
-                user = Company.objects(email=email)
-
+            user = Company.objects(email=email)
             return jsonify(user), 200
         except Exception as e:
             print(e)
             raise e
+
+    def post(self, email):
+        try:
+            company_name = request.form['company_name']
+            project_name = request.form['project']
+            duration = request.form['duration']
+            due_date = request.form['due_date']
+            last_application_date = request.form['last_application_date']
+            difficulty = request.form['difficulty']
+            field = request.form['field']
+            tags = request.form['tags']
+            if 'description' in request.form:
+                description = request.form['description']
+            company = Company.objects.get(companyName=company_name)
+            company.openInternship()
+
+
+    except

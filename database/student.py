@@ -3,20 +3,21 @@ from database.user import User
 from database.db import db
 from assets import errors
 import datetime
+from database.internship import Internship
 
 
 class Student(User):
     rank = db.IntField(default=0)
-    internCandidate = db.ListField(db.NumberField(), default=list)
-    internComplete = db.ListField(db.NumberField(), default=list)
-    internCurrent = db.ListField(db.NumberField(), default=list)
+    internCandidate = db.ListField(db.IntField(), default=list)
+    internComplete = db.ListField(db.IntField(), default=list)
+    internCurrent = db.ListField(db.IntField(), default=list)
 
     def setRank(self, reward):
         self.rank += reward
 
     def setCandidate(self, internId, remove=False):
         if not remove:
-            intern = None  # todo get intern by id
+            intern = Internship.objects.get(id=internId)  # todo get intern by id
             now = datetime.datetime.now()
             if intern.lastApplyDate < now:
                 raise errors.TimeForApplicationPassed

@@ -15,17 +15,16 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 class SignupApi(Resource):
     def post(self):
         try:
-
-            firstName = request.form["first_name"]
-            lastName = request.form["last_name"]
+            name = request.form["name"]
             email = request.form["email"]
             password = request.form["password"]
             user_type = request.form['type']
             if user_type == 'STUDENT':
-                user = Student(firstName=firstName, lastName=lastName, email=email, password=password,
+                user = Student(name=name, email=email, password=password,
                                user_type=user_type)
             else:
-                user = Company(firstName=firstName, lastName=lastName, email=email, password=password,
+                company_name = request.form['company_name']
+                user = Company(name=name, companyName=company_name, email=email, password=password,
                                user_type=user_type)
             user.hash_password()
             user.save()

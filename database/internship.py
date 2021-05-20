@@ -5,7 +5,7 @@ from database.user import User
 
 class Internship(db.Document):
     # the job details
-    companyName = db.StringName(required=True)
+    companyName = db.StringField(required=True)
     name = db.StringField(required=True, min_length=6)
     duration = db.IntField(required=True)
     lastApplyDate = db.StringField(required=True)
@@ -18,8 +18,8 @@ class Internship(db.Document):
     tags = db.ListField(db.StringField())
 
     # things we will decide later
-    workerId = db.NumbrField(default=-1)
-    candidates = db.ListField(db.NumbrField(), default=list)
+    workerId = db.IntField(default=-1)
+    candidates = db.ListField(db.IntField(), default=list)
 
     relevant = db.BooleanField(default=True)
 
