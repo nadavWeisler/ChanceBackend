@@ -13,9 +13,11 @@ from database.user import User
 class SignupApi(Resource):
     def post(self):
         try:
+            firstName = request.form["first name"]
+            lastName = request.form["first name"]
             email = request.form["email"]
             password = request.form["password"]
-            user = User(email=email, password=password)
+            user = User(email=email, password=password, firstName=firstName, lastName=lastName)
             user.hash_password()
             user.save()
             id = user.id
