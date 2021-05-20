@@ -2,29 +2,32 @@ from flask_restful import Resource
 from database.internship import Internship
 from datetime import datetime
 from flask import request
+from flask import jsonify
 
 
 class SearchEngine(Resource):
     def get(self):
         results = Internship.objects(relevant=True, worker_not=-1, lastApplicationDate__gte=datetime.today())
+
         if 'company' in request.form:
             intersection(filterByCompany(request.form["company"]), results)
 
         if "topic" in request.form:
-            intersection(filterByField(), results)
-
-            desiredField = request.form["topic"]
+            intersection(filterByField(request.form["topic"]), results)
 
         if "duration" in request.form:
-            maxTime = request.form["duration"]
+            intersection(filterByDuration(request.form["duration"]), results)
 
         if "levels" in request.form:
-            level = request.form["levels"]
+            intersection(filterByLevel(request.form["levels"]), results)
 
         if "tags" in request.form:
-            tags = request.form["company"]
+            intersection(filterByTags(request.form["tags"]), results)
+
         if "text" in request.form:
-            text = request.form["company"]
+            intersection(filterByField(request.form["text"]), results)
+
+        return jsonify(results)
 
 
 def intersection(lst1, lst2):
@@ -51,23 +54,11 @@ def filterByTags(tags):
     return result
 
 
-def filterByDifficultyRange(levels):
+def filterByLevel(levels):
     result = []
     for level in levels:
         result += Internship.objects(diffcult__lte=level)
     return result
-
-
-def filterBeforeDueDate(date=False):
-    if not date:
-        return Internship.objects()
-    return Internship.objects(dueDate__lte=date)
-
-
-def filterAfterDueDate(date=False):
-    if not date:
-        return Internship.objects()
-    return Internship.objects(dueDate__gte=date)
 
 
 def filterByText(text=False):
@@ -75,5 +66,6 @@ def filterByText(text=False):
         return Internship.objects()
     result = []
     result += Internship.objects(name_contains=text)
+    result += Internship.objects(companyName_contains=text)
     result += Internship.objects(description_contains=text)
     return result
