@@ -1,6 +1,7 @@
 import datetime
 from dateutil import parser
 from flask import request, jsonify, make_response
+from flask_cors import cross_origin
 from flask_jwt_extended import create_access_token, create_refresh_token
 from flask_restful import Resource
 from mongoengine.errors import FieldDoesNotExist, NotUniqueError, DoesNotExist
@@ -57,7 +58,6 @@ class CompanyPersonalSpace(Resource):
         except Exception as e:
             print(e)
             raise e
-
 
 class StudentPersonalSpace(Resource):
     def get(self):
