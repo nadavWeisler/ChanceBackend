@@ -1,7 +1,7 @@
 from flask_login import LoginManager
 import ChanceUtiles as Utiles
 from UserService import User
-from App import app
+from app import app
 
 
 login_manager = LoginManager()

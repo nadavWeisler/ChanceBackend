@@ -16,16 +16,17 @@ class SignupApi(Resource):
             email = request.form["email"]
             password = request.form["password"]
             user = User(email=email, password=password)
-            print(user)
             user.hash_password()
             user.save()
             id = user.id
+            print(id)
             return {'id': str(id)}, 200
         except FieldDoesNotExist:
             raise SchemaValidationError
         except NotUniqueError:
             raise EmailAlreadyExistsError
         except Exception as e:
+            print(e)
             raise InternalServerError
 
 
