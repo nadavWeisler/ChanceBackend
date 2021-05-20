@@ -37,11 +37,18 @@ class EmailDoesnotExistsError(Exception):
 class BadTokenError(Exception):
     pass
 
+
 class NoSuchInternship(Exception):
     pass
 
+
 class NoSuchCandidate(Exception):
     pass
+
+
+class TimeForApplicationPassed(Exception):
+    pass
+
 
 errors = {
     "InternalServerError": {

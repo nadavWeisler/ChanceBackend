@@ -1,5 +1,6 @@
 from .db import db
 from assets import errors
+import datetime as date
 
 
 class Internship(db.Document):
@@ -20,8 +21,8 @@ class Internship(db.Document):
         self.name = db.StringField(required=True, min_length=6)
         self.reward = db.StringField(default=reward)
         self.duration = db.IntField(required=True)
-        self.lastApplyDate = db.StringField(required=True)
-        self.dueDate = db.StringField(required=True)
+        self.lastApplyDate = db.DateTime(required=True)
+        self.dueDate = db.DateTime(required=True)
 
         # further information
         self.field = db.StringField(default=field)
