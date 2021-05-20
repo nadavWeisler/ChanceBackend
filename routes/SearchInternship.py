@@ -7,7 +7,7 @@ from flask import jsonify
 
 class SearchEngine(Resource):
     def get(self):
-        results = Internship.objects(relevant=True, worker_not=-1, lastApplicationDate__gte=datetime.today())
+        results = Internship.objects(relevant=True, workerId_not=None, lastApplicationDate__gte=datetime.today())
 
         if 'company' in request.form:
             intersection(filterByCompany(request.form["company"]), results)

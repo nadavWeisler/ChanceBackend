@@ -18,13 +18,14 @@ class Internship(db.Document):
     tags = db.ListField(db.StringField())
 
     # things we will decide later
-    workerId = db.IntField(default=-1)
-    candidates = db.ListField(db.IntField(), default=list)
+    workerId = db.ObjectIdField(default=None)
+    candidates = db.ListField(db.ObjectIdField(), default=list)
 
     relevant = db.BooleanField(default=True)
 
     def getOffer(self, userId):
         self.candidates.append(userId)
+        User.objects.get(id=userId).setCandidate(self.id)
 
     def approveOffer(self, userId):
         if userId not in self.candidates:

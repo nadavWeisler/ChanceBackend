@@ -8,9 +8,9 @@ from database.internship import Internship
 
 class Student(User):
     rank = db.IntField(default=0)
-    internCandidate = db.ListField(db.IntField(), default=list)
-    internComplete = db.ListField(db.IntField(), default=list)
-    internCurrent = db.ListField(db.IntField(), default=list)
+    internCandidate = db.ListField(db.ObjectIdField(), default=list)
+    internComplete = db.ListField(db.ObjectIdField(), default=list)
+    internCurrent = db.ListField(db.ObjectIdField(), default=list)
 
     def setRank(self, reward):
         self.rank += reward
