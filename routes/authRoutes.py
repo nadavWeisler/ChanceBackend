@@ -42,7 +42,7 @@ class SignupApi(Resource):
 
 
 class LoginApi(Resource):
-    def get(self):
+    def post(self):
         try:
             user = User.objects.get(email=request.form.get('email'))
             authorized = user.check_password(request.form.get('password'))
