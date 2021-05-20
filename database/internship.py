@@ -1,38 +1,25 @@
 from .db import db
 from assets import errors
-import datetime as date
 
 
 class Internship(db.Document):
-    def __init__(self,
-                 companyId,
-                 name,
-                 duration,
-                 lastApplyDate,
-                 dueDate,
-                 field,
-                 tags,
-                 reward):
-        # todo change API to FireBase
-        self.id = db.NumbrField()  # todo will use id creator?
+    # the job details
+    companyId = db.NumbrField(required=True)
+    name = db.StringField(required=True, min_length=6)
+    reward = db.StringField(required=True)
+    duration = db.IntField(required=True)
+    lastApplyDate = db.DateTime(required=True)
+    dueDate = db.DateTime(required=True)
 
-        # the job details
-        self.companyId = db.NumbrField(required=True)
-        self.name = db.StringField(required=True, min_length=6)
-        self.reward = db.StringField(default=reward)
-        self.duration = db.IntField(required=True)
-        self.lastApplyDate = db.DateTime(required=True)
-        self.dueDate = db.DateTime(required=True)
+    # further information
+    field = db.StringField(required=True)
+    tags = db.ListField(db.StringField())
 
-        # further information
-        self.field = db.StringField(default=field)
-        self.tags = db.ListField(db.StringField(), default=tags)
-
-        # things we will decide later
-        self.workerId = db.NumbrField()
-        self.candidates = db.ListField(db.NumbrField(), default=list)
-        self.taken = db.BooleanField(default=True)
-        self.relevant = db.BooleanField(default=True)
+    # things we will decide later
+    workerId = db.NumbrField()
+    candidates = db.ListField(db.NumbrField(), default=list)
+    taken = db.BooleanField(default=True)
+    relevant = db.BooleanField(default=True)
 
     def getOffer(self, userId):
         self.candidates.append(userId)

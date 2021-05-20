@@ -1,16 +1,13 @@
 from database.db import db
 from database.user import User
-from flask_bcrypt import generate_password_hash, check_password_hash
 from assets import errors
 import datetime
 
 
 class Student(User):
-    def __init__(self):
-        User.__init__(self)
-        self.rank = db.NumberField(default=0)
-        self.internCandidate = db.ListField(db.NumberField(), default=list)
-        self.internComplete = db.ListField(db.NumberField(), default=list)
+    rank = db.NumberField(default=0)
+    internCandidate = db.ListField(db.NumberField(), default=list)
+    internComplete = db.ListField(db.NumberField(), default=list)
 
     def setRank(self, reward):
         self.rank += reward
