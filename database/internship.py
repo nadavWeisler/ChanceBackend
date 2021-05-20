@@ -11,6 +11,7 @@ class Internship(db.Document):
     duration = db.IntField(required=True)
     lastApplyDate = db.StringField(required=True)
     dueDate = db.StringField(required=True)
+    description = db.StringField()
 
     # further information
     field = db.StringField()

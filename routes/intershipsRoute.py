@@ -3,6 +3,7 @@ from database.internship import Internship
 from flask_mongoengine import MongoEngine
 from datetime import datetime
 
+
 class SearchEngine(Resource):
     def showAll(self):
         return Internship.objects()
@@ -24,3 +25,21 @@ class SearchEngine(Resource):
 
     def filterByField(self, desiredField):
         return Internship.objects(field=desiredField)
+
+    def filterByTags(self, tags):
+        result = []
+        for tag in tags:
+            result.append(Internship.objects(tag_exists=tag))
+        return result
+
+    def filterBeforeDueDate(self, date):
+        return Internship.objects(dueDate__lte=date)
+
+    def filterAfterDueDate(self, date):
+        return Internship.objects(dueDate__gte=date)
+
+    def filterByText(self, text):
+        result = []
+        result.append(Internship.objects(name_contains=text))
+        result.append(Internship.objects(description_contains=text))
+        return result
