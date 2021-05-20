@@ -21,7 +21,7 @@ class Internship(db.Document):
         self.reward = db.StringField(default=reward)
         self.duration = db.IntField(required=True)
         self.lastApplyDate = db.StringField(required=True)
-        self.dueDate = db.StringField(required=True)  # todo we will use time library?
+        self.dueDate = db.StringField(required=True)
 
         # further information
         self.field = db.StringField(default=field)
