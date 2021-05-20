@@ -1,6 +1,5 @@
 from flask_restful import Resource
 from database.internship import Internship
-from flask_mongoengine import MongoEngine
 from datetime import datetime
 
 
