@@ -8,6 +8,7 @@ from mongoengine.errors import FieldDoesNotExist, NotUniqueError, DoesNotExist
 from assets.errors import SchemaValidationError, EmailAlreadyExistsError, UnauthorizedError, \
     InternalServerError
 from database.user import User
+from flask_jwt_extended import jwt_required, get_jwt_identity
 
 
 class SignupApi(Resource):
