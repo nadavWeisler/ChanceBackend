@@ -6,7 +6,7 @@ from database.internship import Internship
 class Company(User):
     linkedIn = db.StringField()
     github = db.StringField()
-    internships = db.ListField(db.IntField(), list)
+    internships = db.ListField(db.IntField(), default=list)
     companyName = db.StringField(unique=True)
 
     def closeInternship(self, internshipId):
@@ -29,7 +29,7 @@ class Company(User):
                    difficulty=difficulty,
                    description=description,
                    field=field,
-                   tags=tags.replace(" ", "").split("#"))
+                   tags=tags)
 
     def approveCandidate(self, internshipId, studentId):
         Internship.objects.get(id=internshipId).approveOffer(studentId)

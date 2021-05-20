@@ -1,5 +1,5 @@
 import datetime
-
+from dateutil import parser
 from flask import request, jsonify
 from flask_jwt_extended import create_access_token, create_refresh_token
 from flask_restful import Resource
@@ -20,20 +20,27 @@ class CompanyPersonalSpace(Resource):
             print(e)
             raise e
 
-    def post(self, email):
+    def post(self):
         try:
             company_name = request.form['company_name']
-            project_name = request.form['project']
+            project_name = request.form['project_name']
             duration = request.form['duration']
-            due_date = request.form['due_date']
-            last_application_date = request.form['last_application_date']
+            due_date = parser.parse(request.form['due_date'])
+            last_application_date = parser.parse(request.form['last_application_date'])
             difficulty = request.form['difficulty']
             field = request.form['field']
-            tags = request.form['tags']
+            tags = request.form['tags'].replace(" ", "").split("#")
+
+            description = None
             if 'description' in request.form:
                 description = request.form['description']
             company = Company.objects.get(companyName=company_name)
-            company.openInternship()
+            company.openInternship(project_name, duration, last_application_date, due_date, difficulty,
+                                   field, tags, description)
+
+            return company, 200
 
 
-    except
+        except Exception as e:
+            print(e)
+            raise e

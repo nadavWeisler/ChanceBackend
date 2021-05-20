@@ -9,7 +9,6 @@ class User(db.Document):
     email = db.EmailField(required=True, unique=True)
     password = db.StringField(required=True, min_length=6)
     user_type = db.StringField(required=True, choices=TYPES)
-
     meta = {'allow_inheritance': True}
 
     def hash_password(self):
