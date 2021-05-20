@@ -1,5 +1,6 @@
 from .db import db
 from assets import errors
+from database.user import User
 
 
 class Internship(db.Document):
@@ -36,11 +37,11 @@ class Internship(db.Document):
             self.candidates.clear()
 
     def rejectCandidate(self, candidateId):
-        candidate = None  # todo get candidate
+        candidate = User.objects.get(id=candidateId)
         candidate.setCandidate(self.id, True)
 
     def finishProject(self):
-        worker = None  # todo get worker
+        worker = User.objects.get(id=self.workerId)
         worker.setComplete(self.id, True)
         worker.setRank(self.reward)
         self.relevant = False
