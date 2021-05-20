@@ -1,6 +1,6 @@
 from database.user import User
 from database.db import db
-
+from assets import errors
 
 class Student(User):
     rank = db.NumberField(default=0)
