@@ -29,7 +29,7 @@ class Internship(db.Document):
         if userId not in self.candidates:
             raise errors.NoSuchCandidate
         else:
-            self.worker = userId
+            self.workerId = userId
             for candidate in self.candidates:
                 if candidate != userId:
                     self.rejectCandidate(candidate)
