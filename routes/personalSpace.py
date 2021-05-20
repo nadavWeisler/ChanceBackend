@@ -12,9 +12,16 @@ from database.company import Company
 
 
 class CompanyPersonalSpace(Resource):
-    def get(self, email):
+    def get(self):
         try:
-            user = Company.objects(email=email)
+            if 'company_name' or 'email' not in request.form:
+                return 502
+            if 'company_name' in request.form:
+                company_name = request.form['company_name']
+                user = Company.objects.get(companyName=company_name)
+            else:
+                email = request.form['email']
+                user = Company.objects.get(email=email)
             return jsonify(user), 200
         except Exception as e:
             print(e)
@@ -44,3 +51,5 @@ class CompanyPersonalSpace(Resource):
         except Exception as e:
             print(e)
             raise e
+
+
