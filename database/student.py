@@ -1,7 +1,6 @@
-from database.db import db
 from database.user import User
+from database.db import db
 from assets import errors
-import datetime
 
 
 class Student(User):
