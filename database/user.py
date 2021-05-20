@@ -1,6 +1,5 @@
 from database.db import db
 from flask_bcrypt import generate_password_hash, check_password_hash
-from assets import errors
 
 
 class User(db.Document):
@@ -14,5 +13,3 @@ class User(db.Document):
 
     def check_password(self, password):
         return check_password_hash(self.password, password)
-
-

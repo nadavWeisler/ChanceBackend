@@ -20,6 +20,7 @@ class Internship(db.Document):
     # things we will decide later
     workerId = db.NumbrField(default=-1)
     candidates = db.ListField(db.NumbrField(), default=list)
+
     relevant = db.BooleanField(default=True)
 
     def getOffer(self, userId):

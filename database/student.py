@@ -10,11 +10,15 @@ class Student(User):
 
     def setRank(self, reward):
         self.rank += reward
-        return True
 
     def setCandidate(self, internId, remove=False):
         if not remove:
+            intern = None  # todo get intern by id
+            now = datetime.datetime.now()
+            if intern.lastApplyDate < now:
+                raise errors.TimeForApplicationPassed
             self.internCandidate.append(internId)
+
         else:
             if internId not in self.internCandidate:
                 raise errors.NoSuchInternship
