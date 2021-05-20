@@ -6,7 +6,7 @@ from database.internship import Internship
 class Company(User):
     linkedIn = db.StringField()
     github = db.StringField()
-    internships = db.ListField(db.ObjectIdField(), default=list)
+    internships = db.ListField(db.StringField(), default=list)
     companyName = db.StringField(unique=True)
 
     def closeInternship(self, internshipId):
@@ -31,6 +31,9 @@ class Company(User):
                                 field=field,
                                 tags=tags)
         internship.save()
-        self.internships.append(internship.id)
-        return str(internship.id)
+        internship_id = str(internship.id)
+        print(type(internship_id))
+        self.internships.append(internship_id)
+        self.save()
+        return internship_id
 

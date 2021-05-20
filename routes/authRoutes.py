@@ -9,6 +9,7 @@ from assets.errors import SchemaValidationError, EmailAlreadyExistsError, Unauth
     InternalServerError
 from database.student import Student
 from database.company import Company
+from database.user import User
 from flask_jwt_extended import jwt_required, get_jwt_identity
 
 
