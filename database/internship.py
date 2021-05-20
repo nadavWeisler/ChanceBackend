@@ -8,8 +8,8 @@ class Internship(db.Document):
     companyName = db.StringField(required=True)
     name = db.StringField(required=True, min_length=6)
     duration = db.IntField(required=True)
-    lastApplyDate = db.StringField(required=True)
-    dueDate = db.StringField(required=True)
+    lastApplyDate = db.DateTimeField(required=True)
+    dueDate = db.DateTimeField(required=True)
     difficulty = db.IntField(required=True, min_value=1, max_value=3)
     description = db.StringField()
 

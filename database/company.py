@@ -21,15 +21,18 @@ class Company(User):
                        field,
                        tags,
                        description=""):
-        Internship(companyName=self.companyName,
-                   name=name,
-                   duration=duration,
-                   lastApplyDate=lastApplyDate,
-                   dueDate=dueDate,
-                   difficulty=difficulty,
-                   description=description,
-                   field=field,
-                   tags=tags)
+        internship = Internship(companyName=self.companyName,
+                                name=name,
+                                duration=duration,
+                                lastApplyDate=lastApplyDate,
+                                dueDate=dueDate,
+                                difficulty=difficulty,
+                                description=description,
+                                field=field,
+                                tags=tags)
+        internship.save()
+
+        return str(internship.id)
 
     def approveCandidate(self, internshipId, studentId):
         Internship.objects.get(id=internshipId).approveOffer(studentId)

@@ -1,6 +1,6 @@
 import datetime
 from dateutil import parser
-from flask import request, jsonify
+from flask import request, jsonify, make_response
 from flask_jwt_extended import create_access_token, create_refresh_token
 from flask_restful import Resource
 from mongoengine.errors import FieldDoesNotExist, NotUniqueError, DoesNotExist
@@ -35,10 +35,10 @@ class CompanyPersonalSpace(Resource):
             if 'description' in request.form:
                 description = request.form['description']
             company = Company.objects.get(companyName=company_name)
-            company.openInternship(project_name, duration, last_application_date, due_date, difficulty,
-                                   field, tags, description)
-
-            return company, 200
+            intern_id = company.openInternship(project_name, duration, last_application_date, due_date, difficulty,
+                                               field, tags, description)
+            company.save()
+            return {'name': company.name, 'internship': intern_id}, 200
 
 
         except Exception as e:
