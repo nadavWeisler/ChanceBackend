@@ -1,16 +1,18 @@
 from flask import request
 from flask_restful import Resource
+from flask_jwt_extended import jwt_required, get_jwt_identity
 from mongoengine import NotUniqueError, FieldDoesNotExist
 
 from assets.errors import SchemaValidationError, EmailAlreadyExistsError, InternalServerError
 from database.internship import Internship
 
 
-class GetExperimentApi(Resource):
+class GetInternshipsApi(Resource):
+    @jwt_required()
     def get(self):
         try:
-            companyId = request.form["companyId"]
-            internships = Internship.objects.get(companyId=companyId, tags=[])
+            company_id = request.form["companyId"]
+            internships = Internship.objects.get(companyId=company_id, tags=[])
             return {internships}, 200
         except FieldDoesNotExist:
             raise SchemaValidationError
@@ -18,6 +20,7 @@ class GetExperimentApi(Resource):
             raise EmailAlreadyExistsError
         except Exception as e:
             raise InternalServerError
+
 
 class CreateExperimentApi(Resource):
     def post(self):
