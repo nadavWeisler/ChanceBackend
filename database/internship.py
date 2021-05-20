@@ -5,12 +5,12 @@ from database.user import User
 
 class Internship(db.Document):
     # the job details
-    companyId = db.NumbrField(required=True)
+    companyName = db.StringName(required=True)
     name = db.StringField(required=True, min_length=6)
-    reward = db.IntField()
     duration = db.IntField(required=True)
     lastApplyDate = db.StringField(required=True)
     dueDate = db.StringField(required=True)
+    difficulty = db.IntField(required=True, min_value=1, max_value=3)
     description = db.StringField()
 
     # further information
@@ -31,6 +31,7 @@ class Internship(db.Document):
             raise errors.NoSuchCandidate
         else:
             self.workerId = userId
+            User.objects.get(id=userId).setCurrent(self.id)
             for candidate in self.candidates:
                 if candidate != userId:
                     self.rejectCandidate(candidate)
@@ -43,5 +44,6 @@ class Internship(db.Document):
     def finishProject(self):
         worker = User.objects.get(id=self.workerId)
         worker.setComplete(self.id, True)
-        worker.setRank(self.reward)
+        worker.setCurrent(self.id, False)
+        worker.setRank(self.difficulty)
         self.relevant = False
