@@ -6,7 +6,6 @@ from .SearchInternship import SearchEngine
 from .internshipRoute import ApproveCandidate, OfferCandidate, FinishInternship
 
 
-@cross_origin()
 def initialize_routes(api):
     api.add_resource(SignupApi, '/api/auth/signup')
     api.add_resource(LoginApi, '/api/auth/login')

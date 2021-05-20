@@ -1,6 +1,7 @@
 import datetime
 
 from flask import request
+from flask_cors import cross_origin
 from flask_jwt_extended import create_access_token, create_refresh_token
 from flask_restful import Resource
 from mongoengine.errors import FieldDoesNotExist, NotUniqueError, DoesNotExist
@@ -41,6 +42,7 @@ class SignupApi(Resource):
 
 
 class LoginApi(Resource):
+    @cross_origin()
     def get(self):
         try:
             user = User.objects.get(email=request.form.get('email'))
