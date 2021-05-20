@@ -7,7 +7,7 @@ class Internship(db.Document):
     # the job details
     companyId = db.NumbrField(required=True)
     name = db.StringField(required=True, min_length=6)
-    reward = db.StringField()
+    reward = db.IntField()
     duration = db.IntField(required=True)
     lastApplyDate = db.StringField(required=True)
     dueDate = db.StringField(required=True)
