@@ -65,7 +65,7 @@ class StudentPersonalSpaceGet(Resource):
     def post(self):
         try:
             user_id = request.form['user_id']
-            user = Student.objects.get(email=user_id)
+            user = Student.objects.get(id=user_id)
             return {'user_name': user.name,
                     'email': user.email,
                     'rank': user.rank,
