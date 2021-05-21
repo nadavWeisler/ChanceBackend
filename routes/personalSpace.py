@@ -11,19 +11,18 @@ from assets.errors import SchemaValidationError, EmailAlreadyExistsError, Unauth
 from database.internship import Internship
 from database.student import Student
 from database.company import Company
+from database.user import User
 
+class GetType(Resource):
+    def get(self):
+        user = User.objects.get(id=request.form['user_id'])
+        return {'user_type': user.user_type}, 200
 
 class CompanyPersonalSpace(Resource):
     def get(self):
         try:
-            if 'company_name' not in request.form and 'email' not in request.form:
-                return {}, 502
-            if 'company_name' in request.form:
-                company_name = request.form['company_name']
-                user = Company.objects.get(companyName=company_name)
-            else:
-                email = request.form['email']
-                user = Company.objects.get(email=email)
+            user_id = request.form['user_id']
+            user = Company.objects.get(id=user_id)
             return {'user_name': user.name,
                     'email': user.email,
                     'linkedIn': user.linkedIn,
@@ -37,7 +36,7 @@ class CompanyPersonalSpace(Resource):
 
     def post(self):
         try:
-            company_name = request.form['company_name']
+            user_id = request.form['user_id']
             project_name = request.form['project_name']
             duration = request.form['duration']
             due_date = parser.parse(request.form['due_date'])
@@ -49,7 +48,7 @@ class CompanyPersonalSpace(Resource):
             description = None
             if 'description' in request.form:
                 description = request.form['description']
-            company = Company.objects.get(companyName=company_name)
+            company = Company.objects.get(id=user_id)
             intern_id = company.openInternship(project_name, duration, last_application_date, due_date, difficulty,
                                                field, tags, description)
             return {'name': company.name, 'internship': intern_id}, 200
@@ -62,8 +61,8 @@ class CompanyPersonalSpace(Resource):
 class StudentPersonalSpace(Resource):
     def get(self):
         try:
-            email = request.form['email']
-            user = Student.objects.get(email=email)
+            user_id = request.form['user_id']
+            user = Student.objects.get(email=user_id)
             return {'user_name': user.name,
                     'email': user.email,
                     'rank': user.rank,
@@ -77,9 +76,9 @@ class StudentPersonalSpace(Resource):
 
     def post(self, status):
         try:
-            email = request.form['email']
+            user_id = request.form['user_id']
             data = request.form['data']
-            user = Student.objects.get(email=email)
+            user = Student.objects.get(email=user_id)
             if status == 'candidate':
                 user.setCandidate(data)
             elif status == 'current':
