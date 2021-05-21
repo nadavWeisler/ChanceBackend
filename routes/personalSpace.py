@@ -13,10 +13,12 @@ from database.student import Student
 from database.company import Company
 from database.user import User
 
+
 class GetType(Resource):
     def get(self):
         user = User.objects.get(id=request.form['user_id'])
         return {'user_type': user.user_type}, 200
+
 
 class CompanyPersonalSpace(Resource):
     def get(self):
@@ -58,8 +60,9 @@ class CompanyPersonalSpace(Resource):
             print(e)
             raise e
 
-class StudentPersonalSpace(Resource):
-    def get(self):
+
+class StudentPersonalSpaceGet(Resource):
+    def post(self):
         try:
             user_id = request.form['user_id']
             user = Student.objects.get(email=user_id)
@@ -74,6 +77,8 @@ class StudentPersonalSpace(Resource):
             print(e)
             raise e
 
+
+class StudentPersonalSpacePost(Resource):
     def post(self, status):
         try:
             user_id = request.form['user_id']
