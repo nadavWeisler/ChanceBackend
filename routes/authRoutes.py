@@ -20,7 +20,7 @@ class SignupApi(Resource):
             name = request.form["name"]
             email = request.form["email"]
             password = request.form["password"]
-            user_type = request.form['type']
+            user_type = request.form['user_type']
             if user_type == 'STUDENT':
                 user = Student(name=name, email=email, password=password,
                                user_type=user_type)
